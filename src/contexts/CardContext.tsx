@@ -1,4 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
+import { useLevel } from './LevelContext';
 
 type MyContext = {
   pair: HTMLDivElement[];
@@ -25,6 +26,7 @@ export default function CardContext({ children }: MyProps) {
   const [pair, setPair] = useState<HTMLDivElement[]>([]);
   const myCard = useRef({} as CardNumber);
   const [win, setWin] = useState<boolean>(false);
+  const { level } = useLevel();
 
   /* pega todas os elementos que são cartas, como referencia e armazena na
    variável myCard */
@@ -51,6 +53,17 @@ export default function CardContext({ children }: MyProps) {
       }, 1000);
     }
   }
+  function defineWin(level: number) {
+    switch (level) {
+      case 1:
+        return 8;
+      case 2:
+        return 14;
+      case 3:
+        return 18;
+    }
+  }
+
   function checkWin() {
     const cards = Object.values(myCard.current);
     const matches = cards.filter((e) => {
@@ -59,8 +72,7 @@ export default function CardContext({ children }: MyProps) {
       }
       return null;
     });
-
-    if (matches.length === 12) setWin(true);
+    if (matches.length === defineWin(level)) setWin(true);
   }
 
   return (

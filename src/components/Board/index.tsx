@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from './style';
 import Card from '@components/Card';
-import card1 from '@cards/1.png';
-import card2 from '@cards/2.png';
-import card3 from '@cards/3.png';
-import card4 from '@cards/4.png';
-import card5 from '@cards/5.png';
-import card6 from '@cards/6.png';
+import { lvl1, lvl2, lvl3 } from '../../Db/cards';
 import { useCard } from '../../contexts/CardContext';
+import { useLevel } from '@contexts/LevelContext';
 
 export default function index() {
-  const cardsDB = [card1, card2, card3, card4, card5, card6];
   const [cardList, setCardList] = useState<string[]>([]);
   const { pair, setPair, checkPair, buildRef, myCard, checkWin, win } =
     useCard();
+  const { level } = useLevel();
 
   function shuffleCards(cards: string[]) {
     for (let lastItem = cards.length - 1; lastItem > 0; lastItem--) {
@@ -55,9 +51,19 @@ export default function index() {
   }, [pair]);
 
   useEffect(() => {
-    setCardList([...shuffleCards(cardsDB), ...shuffleCards(cardsDB)]);
+    switch (level) {
+      case 1:
+        setCardList([...shuffleCards(lvl1), ...shuffleCards(lvl1)]);
+        break;
+      case 2:
+        setCardList([...shuffleCards(lvl2), ...shuffleCards(lvl2)]);
+        break;
+      case 3:
+        setCardList([...shuffleCards(lvl3), ...shuffleCards(lvl3)]);
+        break;
+    }
     setCardList((oldList) => [...shuffleCards(oldList)]);
-  }, [win]);
+  }, [win, level]);
 
   return (
     <Container>
