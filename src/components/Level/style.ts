@@ -9,4 +9,7 @@ export const Select = styled.select`
   margin-top: 50px;
   padding: 7px;
   border-radius: 10px;
+  .levels__option {
+    background-color: black;
+  }
 `;

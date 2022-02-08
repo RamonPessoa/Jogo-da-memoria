@@ -11,6 +11,7 @@ export default defineConfig({
       '@styles': path.resolve(__dirname, './src/styles'),
       '@fonts': path.resolve(__dirname, './src/assets/fonts'),
       '@cards': path.resolve(__dirname, './src/assets/cards'),
+      '@contexts': path.resolve(__dirname, './src/contexts'),
     },
   },
 });
