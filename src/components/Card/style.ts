@@ -11,8 +11,8 @@ export const Card = styled.div`
   .card {
     position: relative;
     display: flex;
-    width: 100%;
-    height: 100%;
+    width: 160px;
+    height: 160px;
     align-items: center;
     justify-content: center;
     border: 2px solid ${(props) => props.theme.colors.font_orange};
@@ -21,8 +21,11 @@ export const Card = styled.div`
     transition: 1s;
     transform-style: preserve-3d;
     .card__front {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       img {
-        max-width: 80%;
+        width: 400%;
       }
     }
 

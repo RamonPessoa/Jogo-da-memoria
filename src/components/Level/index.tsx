@@ -5,26 +5,14 @@ import { useCard } from '@contexts/CardContext';
 
 export default function index() {
   const selectRef = useRef<HTMLSelectElement>(null);
-  const { myCard, clearPair } = useCard();
-  const { setLevel } = useLevel();
+  const { clearPair, setImgs } = useCard();
+  const { setLevel, level } = useLevel();
 
   const handleChange = () => {
     const currentLevel = selectRef.current?.value;
-    const elements = Object.values(myCard.current);
-    let isTurned = false;
-    elements.map((el) => {
-      el?.className.includes('rotate') ? (isTurned = true) : (isTurned = false);
-
-      el?.classList.remove('rotate');
-      return null;
-    });
-    if (isTurned) {
-      setTimeout(() => {
-        setLevel(Number(currentLevel));
-      }, 1000);
-    } else setLevel(Number(currentLevel));
-
+    setLevel(Number(currentLevel));
     clearPair();
+    setImgs([]);
   };
 
   return (
@@ -33,6 +21,7 @@ export default function index() {
       className='levels'
       ref={selectRef}
       name='levels'
+      value={level}
     >
       <option className='levels__option' value='1'>
         {' '}

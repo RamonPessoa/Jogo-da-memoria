@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from './style';
 import Card from '@components/Card';
-import { lvl1, lvl2, lvl3 } from '../../Db/cards';
+// import { lvl1, lvl2, lvl3 } from '../../Db/cards';
 import { useCard } from '../../contexts/CardContext';
 import { useLevel } from '@contexts/LevelContext';
 
 export default function index() {
   const [cardList, setCardList] = useState<string[]>([]);
-  const { pair, setPair, checkPair, buildRef, myCard, checkWin, win } =
+  const { imgs, pair, setPair, checkPair, buildRef, myCard, checkWin } =
     useCard();
   const { level } = useLevel();
 
@@ -54,17 +54,17 @@ export default function index() {
   useEffect(() => {
     switch (level) {
       case 1:
-        setCardList([...shuffleCards(lvl1), ...shuffleCards(lvl1)]);
+        setCardList([...shuffleCards(imgs), ...shuffleCards(imgs)]);
         break;
       case 2:
-        setCardList([...shuffleCards(lvl2), ...shuffleCards(lvl2)]);
+        setCardList([...shuffleCards(imgs), ...shuffleCards(imgs)]);
         break;
       case 3:
-        setCardList([...shuffleCards(lvl3), ...shuffleCards(lvl3)]);
+        setCardList([...shuffleCards(imgs), ...shuffleCards(imgs)]);
         break;
     }
     setCardList((oldList) => [...shuffleCards(oldList)]);
-  }, [win, level]);
+  }, [level, imgs]);
 
   return (
     <Container>
