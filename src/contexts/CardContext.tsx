@@ -10,6 +10,7 @@ type MyContext = {
   checkWin: () => void;
   win: boolean;
   setWin: Function;
+  clearPair: () => void;
 };
 
 const cardContext = React.createContext<MyContext>({} as MyContext);
@@ -34,6 +35,10 @@ export default function CardContext({ children }: MyProps) {
     return (node: HTMLDivElement) => (myCard.current[card] = node);
   }
 
+  function clearPair() {
+    setPair([]);
+  }
+
   // Verifica se as cartas que estão viradas, são iguais
   function checkPair() {
     if (pair.length < 2) return;
@@ -44,7 +49,7 @@ export default function CardContext({ children }: MyProps) {
       element1.getAttribute('data-pokemon') ===
       element2.getAttribute('data-pokemon')
     ) {
-      setPair([]);
+      clearPair();
     } else {
       setTimeout(() => {
         element1.classList.remove('rotate');
@@ -86,6 +91,7 @@ export default function CardContext({ children }: MyProps) {
         checkWin,
         win,
         setWin,
+        clearPair,
       }}
     >
       {children}

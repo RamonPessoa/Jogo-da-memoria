@@ -5,7 +5,7 @@ import { useCard } from '@contexts/CardContext';
 
 export default function index() {
   const selectRef = useRef<HTMLSelectElement>(null);
-  const { myCard } = useCard();
+  const { myCard, clearPair } = useCard();
   const { setLevel } = useLevel();
 
   const handleChange = () => {
@@ -13,9 +13,8 @@ export default function index() {
     const elements = Object.values(myCard.current);
     let isTurned = false;
     elements.map((el) => {
-      if (el?.className.includes('rotate')) {
-        isTurned = true;
-      }
+      el?.className.includes('rotate') ? (isTurned = true) : (isTurned = false);
+
       el?.classList.remove('rotate');
       return null;
     });
@@ -24,6 +23,8 @@ export default function index() {
         setLevel(Number(currentLevel));
       }, 1000);
     } else setLevel(Number(currentLevel));
+
+    clearPair();
   };
 
   return (

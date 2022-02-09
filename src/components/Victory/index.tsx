@@ -8,7 +8,7 @@ export default function index() {
   const handleClick = (): void => {
     const elements = Object.values(myCard.current);
     elements.map((el) => {
-      el.classList.remove('rotate');
+      el?.classList.remove('rotate');
       return null;
     });
     setTimeout(() => {

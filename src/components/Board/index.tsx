@@ -29,14 +29,15 @@ export default function index() {
       evitando que as cartas se mantenham viradas, caso clique em mais de
       uma carta
     */
-    if (!myCard.current[index].className.includes('rotate')) {
-      if (pair.length < 2) {
-        myCard.current[index].classList.add('rotate');
-        setPair((oldPair: HTMLDivElement[]) => [
-          ...oldPair,
-          myCard.current[index],
-        ]);
-      }
+    if (
+      !myCard.current[index].className.includes('rotate') &&
+      pair.length < 2
+    ) {
+      myCard.current[index].classList.add('rotate');
+      setPair((oldPair: HTMLDivElement[]) => [
+        ...oldPair,
+        myCard.current[index],
+      ]);
     }
   };
 
