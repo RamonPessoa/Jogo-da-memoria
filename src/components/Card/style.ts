@@ -8,6 +8,9 @@ export const Card = styled.div`
   .rotate {
     transform: rotateY(180deg);
   }
+  .no-transition {
+    transition: none !important;
+  }
   .card {
     position: relative;
     display: flex;

@@ -1,18 +1,17 @@
 import React, { useRef } from 'react';
 import { Select } from './style';
 import { useLevel } from '@contexts/LevelContext';
-import { useCard } from '@contexts/CardContext';
+import { useBoard } from '@contexts/GameContext';
 
 export default function index() {
   const selectRef = useRef<HTMLSelectElement>(null);
-  const { clearPair, setImgs } = useCard();
   const { setLevel, level } = useLevel();
+  const { unturnAllCards } = useBoard();
 
   const handleChange = () => {
+    unturnAllCards();
     const currentLevel = selectRef.current?.value;
     setLevel(Number(currentLevel));
-    clearPair();
-    setImgs([]);
   };
 
   return (

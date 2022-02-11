@@ -1,81 +1,81 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from './style';
+import { useBoard } from '@contexts/GameContext';
 import Card from '@components/Card';
-// import { lvl1, lvl2, lvl3 } from '../../Db/cards';
-import { useCard } from '../../contexts/CardContext';
 import { useLevel } from '@contexts/LevelContext';
 
 export default function index() {
-  const [cardList, setCardList] = useState<string[]>([]);
-  const { imgs, pair, setPair, checkPair, buildRef, myCard, checkWin } =
-    useCard();
+  const {
+    buildRef,
+    imgs,
+    cardsRef,
+    shuffleBoard,
+    setTrys,
+    pair,
+    setPair,
+    setWin,
+  } = useBoard();
+  const [myBoard, setMyBoard] = useState<Array<string>>([]);
   const { level } = useLevel();
 
-  function shuffleCards(cards: string[]) {
-    for (let lastItem = cards.length - 1; lastItem > 0; lastItem--) {
-      const randomPosition = Math.floor(Math.random() * (lastItem + 1));
-      [cards[lastItem], cards[randomPosition]] = [
-        cards[randomPosition],
-        cards[lastItem],
-      ];
-    }
-
-    return cards;
+  function turnCard(index: number) {
+    const card = cardsRef.current[index];
+    if (card.className.includes('rotate') || pair.length > 1) return;
+    card.classList.add('rotate');
+    setPair((oldPair: Array<HTMLDivElement>) => [...oldPair, card]);
   }
 
-  const handleClick = (index: number) => {
-    /*
-      Caso o Elemento já esteja virado, é impossível, colocalo na pilha,
-      evitando que as cartas se mantenham viradas, caso clique em mais de
-      uma carta
-    */
+  function checkPair(pair: Array<HTMLDivElement>) {
+    if (pair.length < 2) return;
+    const card1 = pair[0];
+    const card2 = pair[1];
+    setTrys((trys: number) => trys + 1);
+
     if (
-      !myCard.current[index].className.includes('rotate') &&
-      pair.length < 2
+      card1.getAttribute('data-pokemon') !== card2.getAttribute('data-pokemon')
     ) {
-      myCard.current[index].classList.add('rotate');
-      setPair((oldPair: HTMLDivElement[]) => [
-        ...oldPair,
-        myCard.current[index],
-      ]);
+      setTimeout(() => {
+        card1.classList.remove('rotate');
+        card2.classList.remove('rotate');
+        setPair([]);
+      }, 1000);
+    } else {
+      setPair([]);
     }
-  };
+  }
 
-  // const renderCards = () => {
-  //   if (win === true) return;
-  //   return
-  // };
+  function checkWin() {
+    if (imgs.length === 0) return;
+    const cards = Object.values(cardsRef.current).filter((e) => e !== null);
+    let quantidy: number = 0;
+    cards.forEach((el) => {
+      // eslint-disable-next-line no-unused-expressions
+      el.className.includes('rotate') ? (quantidy = quantidy + 1) : null;
+    });
+    quantidy === imgs.length ? setWin(true) : setWin(false);
+  }
 
   useEffect(() => {
-    checkPair();
-    if (Object.values(myCard.current).length !== 0) checkWin();
+    setMyBoard(shuffleBoard());
+    setWin(false);
+  }, [imgs, level]);
+
+  useEffect(() => {
+    checkPair(pair);
+    checkWin();
   }, [pair]);
-
-  useEffect(() => {
-    switch (level) {
-      case 1:
-        setCardList([...shuffleCards(imgs), ...shuffleCards(imgs)]);
-        break;
-      case 2:
-        setCardList([...shuffleCards(imgs), ...shuffleCards(imgs)]);
-        break;
-      case 3:
-        setCardList([...shuffleCards(imgs), ...shuffleCards(imgs)]);
-        break;
-    }
-    setCardList((oldList) => [...shuffleCards(oldList)]);
-  }, [level, imgs]);
-
   return (
     <Container>
-      {cardList.map((el, index) => {
+      {myBoard.map((el, index) => {
         return (
           <Card
-            onClick={() => handleClick(index)}
             card={el}
             key={index}
             ref={buildRef(index)}
-          />
+            onClick={() => {
+              turnCard(index);
+            }}
+          ></Card>
         );
       })}
     </Container>
