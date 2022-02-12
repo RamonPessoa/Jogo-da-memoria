@@ -24,12 +24,15 @@ Antes de começar, verifique se você atendeu oas seguintes requisitos:
 * Ter o git instalado
 
 ## 🚀 Instalando o jogo da memória
-Para clonar este repositório siga os seguintes passos:
+### 1. Para clonar este repositório siga os seguintes passos:
 * abra o terminal na pasta desejada
 * digite o seguinte comando:
 ```
 git clone https://github.com/RamonPessoa/portifolio.git
 ```
+### 2. Para baixar os arquivos compactados acesse o link abaixo
+* https://github.com/RamonPessoa/Jogo-da-memoria/releases/tag/v1.0
+
 
 ## ☕ Usando o Jogo da Memória
 Utilize os seguintes comandos no terminal na pasta do repositório clonado:
