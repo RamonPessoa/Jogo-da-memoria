@@ -4,6 +4,8 @@ import Section from '@components/Section';
 export const Container = styled(Section)`
   padding: 10px 20px;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   gap: 30px;
   button {

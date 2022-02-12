@@ -6,6 +6,7 @@ const Section = styled.section`
   border: ${(props) => props.theme.colors.element_border};
   border-radius: 10px;
   margin-top: 50px;
+  min-width: 200px;
 `;
 
 export default Section;

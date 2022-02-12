@@ -6,10 +6,12 @@ import { useBoard } from '@contexts/GameContext';
 export default function index() {
   const selectRef = useRef<HTMLSelectElement>(null);
   const { setLevel, level } = useLevel();
-  const { unturnAllCards } = useBoard();
+  const { unturnAllCards, setTrys, setPair } = useBoard();
 
   const handleChange = () => {
     unturnAllCards();
+    setTrys(0);
+    setPair([]);
     const currentLevel = selectRef.current?.value;
     setLevel(Number(currentLevel));
   };

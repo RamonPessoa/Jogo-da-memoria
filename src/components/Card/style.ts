@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
 export const Card = styled.div`
-  display: flex;
-  height: 160px;
-  width: 160px;
   perspective: 400px;
+  min-width: 150px;
   .rotate {
     transform: rotateY(180deg);
   }
@@ -14,7 +12,7 @@ export const Card = styled.div`
   .card {
     position: relative;
     display: flex;
-    width: 160px;
+    width: 100%;
     height: 160px;
     align-items: center;
     justify-content: center;
